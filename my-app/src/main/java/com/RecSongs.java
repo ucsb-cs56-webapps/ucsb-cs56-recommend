@@ -8,6 +8,10 @@ import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 
+import com.wrapper.spotify.model_objects.specification.Paging;
+import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
+import com.wrapper.spotify.requests.data.browse.GetCategorysPlaylistsRequest;
+
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -19,17 +23,21 @@ import java.util.concurrent.Future;
 public class RecSongs
 {
 
-    private static final String clientId = "a1836f665e904cb4869901a56eb1582b";
-    private static final String clientSecret = "cfb9be2440aa427ca22fa07d583833d7";
+    //instance variables 
 
-    private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
+
+    private final String clientId = "a1836f665e904cb4869901a56eb1582b";
+    private final String clientSecret = "cfb9be2440aa427ca22fa07d583833d7";
+
+    //authentification
+    private final SpotifyApi spotifyApi = new SpotifyApi.Builder()
           .setClientId(clientId)
           .setClientSecret(clientSecret)
           .build();
-    private static final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
+    private final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
           .build();
 
-    public static void clientCredentials_Sync() {
+    public void clientCredentials_Sync() {
         try {
         final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
 
@@ -42,7 +50,7 @@ public class RecSongs
         }
     }
 
-    public static void clientCredentials_Async() {
+    public void clientCredentials_Async() {
         try {
         final Future<ClientCredentials> clientCredentialsFuture = clientCredentialsRequest.executeAsync();
 
@@ -58,13 +66,62 @@ public class RecSongs
         System.out.println("Error: " + e.getCause().getMessage());
         }
     }
+
+    //Constructor
     RecSongs()
     {
 
     }
 
+    public String getSongs(String categoryId)
+    {
+
+    } 
+
+    //Get category playlist
+    public void getCategoryPlaylist(String categoryId)
+    {
+        GetCategorysPlaylistsRequest getCategoryRequest = spotifyApi.getCategorysPlaylists(categoryId)
+          .country(CountryCode.SE)
+          .limit(1)
+          .offset(0)
+          .build();
+        /* Do something with getCategoryRequest here? */
+        /*https://github.com/thelinmichael/spotify-web-api-java/blob/master/examples/data/browse/GetCategorysPlaylistsExample.java*/
+
+    }
+
+
+
+    /*    
     /*
-    public static void main( String[] args )
+    public void getCategorysPlaylists_Sync(GetCategorysPlaylistsRequest g) {
+        try {
+        final Paging<PlaylistSimplified> playlistSimplifiedPaging = g.execute();
+
+        System.out.println("Total: " + playlistSimplifiedPaging.getTotal());
+        } catch (IOException | SpotifyWebApiException e) {
+        System.out.println("Error: " + e.getMessage());
+        }
+    }
+    */
+
+    /*
+    public void getCategorysPlaylists_Async(GetCategorysPlaylistsRequest g) {
+        try {
+        final Future<Paging<PlaylistSimplified>> pagingFuture = g.executeAsync();
+
+        // ...
+
+        final Paging<PlaylistSimplified> playlistSimplifiedPaging = pagingFuture.get();
+
+        System.out.println("Total: " + playlistSimplifiedPaging.getTotal());
+        } catch (InterruptedException | ExecutionException e) {
+        System.out.println("Error: " + e.getCause().getMessage());
+        }
+    }
+    */
+    public void main( String[] args )
     {
         System.out.println( "Hello World!" );
     }
