@@ -2,6 +2,7 @@
 
 import org.json.simple.JSONObject;
 
+import com.neovisionaries.i18n.CountryCode;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
@@ -56,22 +57,24 @@ public class RecSongs
     //Constructor - intialize clientcredentials
     RecSongs()
     {
-        //clientCredentials_Sync();
+        clientCredentials_Sync();
     }
 
     
     //returns 3 songs given a categoryId (genre)
     public JSONObject getSongs(String categoryId)
     {
-        int playlistId = getCategoryPlaylist(categoryId);
+        String playlistId = getCategoryPlaylist(categoryId);
         Paging<PlaylistTrack> playlist = getPlaylistTracks(playlistId);
         JSONObject obj = new JSONObject();
-        while (playlist.getNext()!=null)
+        int i=0;
+        while (playlist.getNext()!=null && i<playlist.getTotal());
         {
-            obj.put("song", playlist.getTrack().getName());
-            obj.put("artist", playlist.getTrack().getArtists());
+            obj.put("song", playlist.getItems()[i].getTrack().getName());
+            obj.put("artist", playlist.getItems()[i].getTrack().getArtists());
             obj.put("genre", categoryId);
             playlist.getNext();
+            i++;
         }
         System.out.print(obj);
         return obj;
@@ -80,7 +83,7 @@ public class RecSongs
     //How we will do this: Get catgegory playlist --> Get playlist's tracks
 
     //Get category playlist
-    private int getCategoryPlaylist(String categoryId)
+    private String getCategoryPlaylist(String categoryId)
     {
         GetCategorysPlaylistsRequest getCategoryRequest = spotifyApi.getCategorysPlaylists(categoryId)
             .country(CountryCode.US)
@@ -90,17 +93,17 @@ public class RecSongs
         try 
         {
             Paging<PlaylistSimplified> playlistSimplifiedPaging = getCategoryRequest.execute();
-            System.out.println("PlaylistID: " + playlistSimplifiedPaging.getId());
-            return playlistSimplifiedPaging.getId();
+            System.out.println("PlaylistID: " + playlistSimplifiedPaging.getItems()[0].getId());
+            return playlistSimplifiedPaging.getItems()[0].getId();
         }
         catch (IOException | SpotifyWebApiException e) {
             System.out.println("Error: " + e.getMessage());
-            return -1;
+            return null;
         }
     }
 
     //Get playlist's tracks
-    private Paging<PlaylistTrack> getPlaylistTracks(int playlistId)
+    private Paging<PlaylistTrack> getPlaylistTracks(String playlistId)
     {
         GetPlaylistsTracksRequest getPlaylistsTracksRequest = spotifyApi
           .getPlaylistsTracks(playlistId)
@@ -108,8 +111,15 @@ public class RecSongs
           .offset(0)
           .market(CountryCode.US)
           .build();
-        Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();  
-        return playlistTrackPaging;
+        try
+        {
+            Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();  
+            return playlistTrackPaging;
+        }
+        catch (IOException | SpotifyWebApiException e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
     }
     
 }
