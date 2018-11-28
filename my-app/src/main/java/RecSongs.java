@@ -1,4 +1,4 @@
-package com.recommend;
+
 
 import org.json.simple.JSONObject;
 
@@ -17,13 +17,15 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+
 /**
  * Uses spotify API to send back recommended songs to client based on user's songs from client.
  *
  */
+
 public class RecSongs
 {
-
+    
     //instance variables 
     private final String clientId = "a1836f665e904cb4869901a56eb1582b";
     private final String clientSecret = "cfb9be2440aa427ca22fa07d583833d7";
@@ -50,13 +52,14 @@ public class RecSongs
             System.out.println("Error: " + e.getMessage());
         }
     }
-
+    
     //Constructor - intialize clientcredentials
     RecSongs()
     {
-        clientCredentials_Sync();
+        //clientCredentials_Sync();
     }
 
+    
     //returns 3 songs given a categoryId (genre)
     public JSONObject getSongs(String categoryId)
     {
@@ -84,7 +87,6 @@ public class RecSongs
             .limit(1)
             .offset(0)
             .build();
-        /* Do something with getCategoryRequest here? */
         try 
         {
             Paging<PlaylistSimplified> playlistSimplifiedPaging = getCategoryRequest.execute();
@@ -95,7 +97,6 @@ public class RecSongs
             System.out.println("Error: " + e.getMessage());
             return -1;
         }
-        /*https://github.com/thelinmichael/spotify-web-api-java/blob/master/examples/data/browse/GetCategorysPlaylistsExample.java*/
     }
 
     //Get playlist's tracks
@@ -110,4 +111,6 @@ public class RecSongs
         Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();  
         return playlistTrackPaging;
     }
+    
 }
+
