@@ -12,7 +12,7 @@ public class HelloController {
 	//@RequestMapping will map "/" to the index method??
 	@RequestMapping("/")
     public String index() {
-        return "Changing up the index here";
+        return "index";
     }
 
 	//HelloController is able to return text thanks to @RestController
