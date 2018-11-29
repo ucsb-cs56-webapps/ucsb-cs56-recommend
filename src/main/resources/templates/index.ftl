@@ -33,5 +33,7 @@
    <input type="submit" value="ViewDB">
  </form>
 
+ <p>${name}</p>
+
 </body>
 </html>

@@ -1,5 +1,8 @@
 package hello;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,8 +50,8 @@ public class MainController {
 	}
 
 	@RequestMapping(path="/webpage")
-    public String webpage() {
-        /*
+    public String webpage(Model model) {
+        
         String message;
         JSONObject json = new JSONObject();
         json.put("name", "student");
@@ -62,9 +65,9 @@ public class MainController {
 
         json.put("course", array);
         message = json.toString();
-        */
+        
 
-        //model.addAttribute("name", "HELLO");
+        model.addAttribute("name", message);
         return "index";
     }
 }
