@@ -32,8 +32,11 @@
  <form action="/demo/all">
    <input type="submit" value="ViewDB">
  </form>
+</form>
+<form action="/demo/request">
+  <input type="submit" value="Recommend">
+</form>
 
- <p>${name}</p>
 
 </body>
 </html>
