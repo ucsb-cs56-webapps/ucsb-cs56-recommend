@@ -1,3 +1,4 @@
-AppController.class
-App.class
-RecSongs.class
+recommend/RecSongs.class
+recommend/HelloController.class
+recommend/Application.class
+recommend/TestSpotify.class

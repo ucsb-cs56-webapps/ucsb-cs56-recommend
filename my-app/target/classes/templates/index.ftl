@@ -21,6 +21,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <p>Hello World!</p>
+    <button id = "rec">Give me a pop song!</button>
+    <p>${song1}</p>
   </body>
 </html>
