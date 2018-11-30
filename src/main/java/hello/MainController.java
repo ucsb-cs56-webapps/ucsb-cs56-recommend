@@ -2,6 +2,7 @@ package hello;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,6 @@ public class MainController {
 			, @RequestParam String artist, @RequestParam String genre) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
-
 
 		User n = new User();
 		n.setSongName(song);
@@ -66,8 +66,25 @@ public class MainController {
         json.put("course", array);
         message = json.toString();
         
-
         model.addAttribute("name", message);
         return "index";
     }
+
+    
+    @RequestMapping(path="/request")
+    public String request(Model model) {
+    	/*
+    	//getARandomItemFromDatabase
+    	int n = (int) (Math.random() * userRepository.count()); //Might be problem when size of userRepository exceeds size of int
+    	User u = userRepository.findById(n);
+    	String userInfo = u.toString();
+    	model.addAttribute("user", userInfo);
+    	//runApiFunctionUsingItem^^AsParameter 			(jennifer)
+    	//3SongsGetsReturned.NowRunDisplayFTLFile		(shirlyn)
+    	return "display";
+    	*/
+    	model.addAttribute("user", "ryan");
+    	return "display";
+    }
+    
 }

@@ -1,17 +1,23 @@
 
 package hello;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.ui.Model;
+
 
 //This class is flagged as a @RestController
 //This means the class "HelloController" can be used by Spring MVC to handle web requests
-@RestController
+@Controller
 public class HelloController {
 
 	//@RequestMapping will map "/" to the index method??
 	@RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
+    	String message = "hello";
+
+    	model.addAttribute("name", message);
         return "index";
     }
 
