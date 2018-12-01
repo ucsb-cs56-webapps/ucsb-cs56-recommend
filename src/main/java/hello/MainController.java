@@ -3,6 +3,7 @@ package hello;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import java.util.Random;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,18 +74,68 @@ public class MainController {
     
     @RequestMapping(path="/request")
     public String request(Model model) {
-    	/*
-    	//getARandomItemFromDatabase
-    	int n = (int) (Math.random() * userRepository.count()); //Might be problem when size of userRepository exceeds size of int
-    	User u = userRepository.findById(n);
-    	String userInfo = u.toString();
-    	model.addAttribute("user", userInfo);
-    	//runApiFunctionUsingItem^^AsParameter 			(jennifer)
-    	//3SongsGetsReturned.NowRunDisplayFTLFile		(shirlyn)
-    	return "display";
-    	*/
-    	model.addAttribute("user", "ryan");
-    	return "display";
+    	
+    	//If there is no data in database, we will redirect to index.ftl
+        if((int)userRepository.count() == 0) {
+            return "index";
+        }
+
+        //Retrieve a random song from our database
+        int index = (int)(Math.random() * userRepository.count()) + 1;
+        String songname = userRepository.findById(index).get().getSongName();
+        model.addAttribute("data", songname);
+
+        //Pass random song to spotify api and retrieve an arrayList(3) of recommended songs
+        ArrayList<JSONObject> arrList = new ArrayList<JSONObject>(3);
+
+        //This part is test until we have api function to retrieve data
+    	JSONObject obj = new JSONObject();
+    	obj.put("Book ID", "30");
+    	obj.put("Book Name", "asdfasdfa");
+    	obj.put("Category", "sdfdddd");
+    	obj.put("Price", "125.60");
+
+        JSONObject obj2 = new JSONObject();
+        obj2.put("Book ID", "50");
+        obj2.put("Book Name", "asdfasdfa");
+        obj2.put("Category", "sdfdddd");
+        obj2.put("Price", "125.60");
+
+        JSONObject obj3 = new JSONObject();
+        obj3.put("Book ID", "80");
+        obj3.put("Book Name", "asdfasdfa");
+        obj3.put("Category", "sdfdddd");
+        obj3.put("Price", "125.60");
+
+        arrList.add(0, obj);
+        arrList.add(1, obj2);
+        arrList.add(2, obj3);
+
+    	String s = obj.toString();
+    	
+        //Constructs a string in javascript's array of JSONObject format
+        //i.e. [{"id":1,"artist":"Michael Jackson","genre":"Pop","songName":"Billie Jean"},{"id":2,"artist":"Queen","genre":"Rock","songName":"Bohemian Rhapsody"}]
+        String arr = "[";
+        for(int i = 0; i < arrList.size(); i++) {
+            arr += arrList.get(i).toString();
+            if(i == arrList.size() - 1) {
+                arr+="]";
+            } else {
+                arr+=",";
+            }
+        }
+
+        //Pass array of JSONObjects to display.ftl
+        model.addAttribute("arrObj", arr);
+    	
+        //This part delete later        
+        model.addAttribute("user", s);
+    	
+
+        //Redirect to display.ftl file
+        return "display";
+    	
+    	
     }
     
 }
