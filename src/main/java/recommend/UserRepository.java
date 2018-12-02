@@ -1,4 +1,4 @@
-package hello;
+package recommend;
 
 import org.springframework.data.repository.CrudRepository;
 
