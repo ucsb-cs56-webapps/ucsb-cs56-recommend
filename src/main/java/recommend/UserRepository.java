@@ -10,8 +10,8 @@ import recommend.User;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 	
-	@Query(value = "ALTER TABLE db_example.user AUTO_INCREMENT = 1", nativeQuery = true)
-	void resetAutoInc();
-	
+	//@Query(value = "ALTER TABLE user AUTO_INCREMENT = 1;", nativeQuery = true)
+	//void resetAutoInc();
+
 	User findUserBySong(String song);
 }
