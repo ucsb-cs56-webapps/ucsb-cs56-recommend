@@ -21,7 +21,6 @@
 <body>
     <input type="button" onclick="CreateTableFromJSON()" value="Display Recommendations" />
     <p id="showData"></p>
-    <p>${data}</p>
 </body>
 
 <script>
@@ -49,7 +48,6 @@
         	function(xhr) { console.error(xhr); }
 	);*/	
 	//dynamically making jSON file stub
-        //var string = ${user};
         
         
 	    var myBooks = ${arrObj};

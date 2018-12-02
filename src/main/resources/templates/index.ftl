@@ -15,15 +15,15 @@
    <input type="text" name="artist"><br>
 
    <select name= "genre">
-     <option value="Pop">Pop</option>
-     <option value="Hiphop">Hip Hop</option>
-     <option value="Country">Country</option>
-     <option value="Chill">Chill</option>
-     <option value="Dance/Electronic">Dance/Electronic</option>
-     <option value="Rock">Rock</option>
-     <option value="Soul">Soul</option>
-     <option value="Indie">Indie</option>
-     <option value="K-pop">K-pop</option>
+     <option value="pop">Pop</option>
+     <option value="hiphop">Hip Hop</option>
+     <option value="country">Country</option>
+     <option value="chill">Chill</option>
+     <option value="edm_dance">EDM</option>
+     <option value="rock">Rock</option>
+     <option value="soul">Soul</option>
+     <option value="indie_alt">Indie</option>
+     <option value="kpop">K-pop</option>
    </select>
 
    <input type="submit" value="Submit">
