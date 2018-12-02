@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity //This tells Hibernate to make a table out of this class
 public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
 	private String song;
@@ -16,6 +16,10 @@ public class User {
 	private String artist;
 
 	private String genre;
+
+	public void resetId() {
+		this.id = 0;
+	}
 
 	public Integer getId() {
 		return id;

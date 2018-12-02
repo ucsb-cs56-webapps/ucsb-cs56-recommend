@@ -35,7 +35,8 @@
 <form action="/demo/request">
   <input type="submit" value="Recommend">
 </form>
-<form action="/demo/clear" target="hiddenFrame" method="get">
+
+<form action="/demo/clear" target="hiddenFrame">
   <input type="submit" value="ClearDB">
 </form>
 
