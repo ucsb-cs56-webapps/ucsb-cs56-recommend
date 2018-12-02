@@ -79,8 +79,8 @@ public class MainController {
     public void clear() {
         
         id_counter = 1;
-        //userRepository.deleteAll();
-        userRepository.resetAutoInc();
+        userRepository.deleteAll();
+        //userRepository.resetAutoInc();
     }
 
     
