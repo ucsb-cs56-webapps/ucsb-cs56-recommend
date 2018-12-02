@@ -72,6 +72,11 @@ public class MainController {
         return "index";
     }
 
+    @RequestMapping(path="/clear") 
+    public void clear() {
+        userRepository.deleteAll();
+    }
+
     
     @RequestMapping(path="/request")
     public String request(Model model) {
