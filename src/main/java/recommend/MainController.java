@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.ui.Model;
 
-import hello.User;
-import hello.UserRepository;
+import recommend.User;
+import recommend.UserRepository;
 
 @Controller    // This means that this class is a Controller
 @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
