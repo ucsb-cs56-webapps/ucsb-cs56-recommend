@@ -19,8 +19,8 @@ public class HelloController {
     public String index(Model model) {
     	//String message = "hello";
     	RecSongs spotify = new RecSongs();
-    	ArrayList<JSONObject> list = spotify.getSongs("country");
-    	JSONObject song1 = list.get(0);
+    	ArrayList<JSONObject> list = spotify.getSongs("pop");
+    	JSONObject song1 = (String) list.get(0).get("song");
     	model.addAttribute("name", song1);
         return "index";
     }

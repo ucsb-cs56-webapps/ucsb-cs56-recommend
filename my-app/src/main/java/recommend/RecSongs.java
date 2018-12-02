@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import java.util.*; //for ArrayList
+import java.lang.*;
 
 /**
  * Uses spotify API to send back recommended songs to client based on user's songs from client.
@@ -34,6 +35,7 @@ public class RecSongs
     private final String clientId = "a1836f665e904cb4869901a56eb1582b";
     private final String clientSecret = "cfb9be2440aa427ca22fa07d583833d7";
     private final int songsToReturn = 3;
+    private int playlistLength;
 
     //authentification
     private final SpotifyApi spotifyApi = new SpotifyApi.Builder()
@@ -62,6 +64,7 @@ public class RecSongs
     RecSongs()
     {
         clientCredentials_Sync();
+        playlistLength = 0;
         System.out.println("client credentials authorized.");
     }
 
@@ -74,7 +77,13 @@ public class RecSongs
         String playlistId = getCategoryPlaylist(categoryId);
         Paging<PlaylistTrack> playlist = getPlaylistTracks(playlistId);
         int i=0;
+        while (playlist.getItems().length<3)
+        {
+            playlistId = getCategoryPlaylist(categoryId);
+            playlist = getPlaylistTracks(playlistId);
+        }
         System.out.println("about to entire while loop");
+        System.out.println("playlist length: " + playlist.getItems().length);
         while (i<songsToReturn)
         {
             System.out.println("inside while loop " + i + " iteration");
@@ -100,14 +109,16 @@ public class RecSongs
         GetCategorysPlaylistsRequest getCategoryRequest = spotifyApi.getCategorysPlaylists(categoryId)
             .country(CountryCode.US)
             .limit(1)
-            .offset(0)
+            .offset((int) Math.floor(Math.random() * 6))
             .build();
         try 
         {
             //System.out.println(getCategoryRequest.getJson());
             Paging<PlaylistSimplified> playlistSimplifiedPaging = getCategoryRequest.execute();
             System.out.println("PlaylistID: " + playlistSimplifiedPaging.getItems()[0].getId());
-            System.out.println("got category playlist");
+            System.out.println("PlaylistName: " + playlistSimplifiedPaging.getItems()[0].getName());
+            System.out.println("Playlist Length: " + playlistSimplifiedPaging.getItems()[0].getTracks().getTotal());
+            playlistLength = playlistSimplifiedPaging.getItems()[0].getTracks().getTotal();
             return playlistSimplifiedPaging.getItems()[0].getId();
         }
         catch (IOException | SpotifyWebApiException e) {
@@ -123,7 +134,7 @@ public class RecSongs
         GetPlaylistsTracksRequest getPlaylistsTracksRequest = spotifyApi
           .getPlaylistsTracks(playlistId)
           .limit(3)
-          .offset(0)
+          .offset((int) Math.floor(Math.random() * (playlistLength-4)))
           .market(CountryCode.US)
           .build();
         try

@@ -22,6 +22,5 @@
   </head>
   <body>
     <button id = "rec">Give me a pop song!</button>
-    <p>${song1}</p>
   </body>
 </html>
