@@ -17,3 +17,8 @@ Recommend Webapp: Moved from a broad, recommended activity feed to an entertainm
 Main Idea: Web app that recommends entertainment content based on what the user inputs in as their interests.
 
 Link: https://cs56-recommend-project.herokuapp.com/
+
+Necessary Installs: 
+1) If running on local, require MySQL running
+
+
