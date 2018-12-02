@@ -16,6 +16,9 @@ import com.wrapper.spotify.model_objects.specification.PlaylistTrack;
 import com.wrapper.spotify.requests.data.playlists.GetPlaylistsTracksRequest;
 import com.wrapper.spotify.requests.AbstractRequest;
 
+import com.wrapper.spotify.model_objects.specification.Category;
+import com.wrapper.spotify.requests.data.browse.GetListOfCategoriesRequest;
+
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -72,6 +75,7 @@ public class RecSongs
     //returns arraylist of jsonobjects songs given a categoryId (genre)
     public ArrayList<JSONObject> getSongs(String categoryId)
     {
+        
         System.out.println("retrieiving songs list");
         ArrayList<JSONObject> songList = new ArrayList<JSONObject>();
         String playlistId = getCategoryPlaylist(categoryId);
@@ -98,9 +102,36 @@ public class RecSongs
         System.out.print(songList);
         System.out.println("got songs list");
         return songList;
+        
+        
     }
 
     //How we will do this: Get catgegory playlist --> Get playlist's tracks
+
+    //Get list of categories
+    public void getCategories()
+    {
+        GetListOfCategoriesRequest getListOfCategoriesRequest = spotifyApi.getListOfCategories()
+          .country(CountryCode.US)
+          .limit(50)
+          .offset(0)
+          .locale("sv_SE")
+          .build();
+        try
+        {
+            Paging<Category> categoryPaging = getListOfCategoriesRequest.execute();
+            System.out.println(categoryPaging.getTotal());
+            int length = categoryPaging.getItems().length;
+            for (int i=0; i<length; i++)
+            {
+                System.out.println(categoryPaging.getItems()[i].getName());
+            }
+        }
+        catch (IOException | SpotifyWebApiException e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
     //Get category playlist
     private String getCategoryPlaylist(String categoryId)
