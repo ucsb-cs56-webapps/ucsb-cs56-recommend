@@ -18,7 +18,19 @@ Main Idea: Web app that recommends entertainment content based on what the user 
 
 Link: https://cs56-recommend-project.herokuapp.com/
 
-Necessary Installs: 
-1) If running on local, require MySQL running
+Instruction for setting up MySQL
+1) Download MySQL running
+2) Start up mysql console
+    - start up command line
+	- cd to mysql/bin folder
+	- type mysql -u root -p
+	- your password might be your computer's password????????
+3) if you see >mysql instead of the usual path in cmd now, it means it worked
+	- type this in
+	
+mysql> create database db_example; 
+mysql> create user 'springuser'@'%' identified by 'ThePassword'; 
+mysql> grant all on db_example.* to 'springuser'@'%'; 
+	
 
 
