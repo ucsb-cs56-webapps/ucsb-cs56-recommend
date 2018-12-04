@@ -28,8 +28,10 @@ Instruction for setting up MySQL
 3) if you see >mysql instead of the usual path in cmd now, it means it worked
 	- type this in
 	
-mysql> create database db_example; 
+mysql> create database db_example;
+
 mysql> create user 'springuser'@'%' identified by 'ThePassword'; 
+
 mysql> grant all on db_example.* to 'springuser'@'%'; 
 	
 
