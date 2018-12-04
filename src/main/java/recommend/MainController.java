@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
 
 import org.springframework.ui.Model;
 
@@ -42,11 +44,44 @@ public class MainController {
 		return "Saved";
 	}
 
+    /*
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<User> getAllUsers() {
 		// This returns a JSON or XML with the users
 		return userRepository.findAll();
 	}
+    */
+
+    @RequestMapping(path="/all")
+    public String getAllUsers(Model model) {
+        if (userRepository.count() == 0)
+        {
+            model.addAttribute("arrObj", null);
+            return "playlist";
+        }
+        Iterable<User> users = userRepository.findAll();
+        ArrayList<JSONObject> userList = new ArrayList<JSONObject>();
+        for (User u : users)
+        {
+            JSONObject obj = new JSONObject();
+            obj.put("song", u.getSongName());
+            obj.put("artist", u.getArtist());
+            obj.put("genre", u.getGenre());
+            userList.add(obj);
+        }
+        String arr = "[";
+        for(int i = 0; i < userList.size(); i++) {
+            arr += userList.get(i).toString();
+            if(i == userList.size() - 1) {
+                arr+="]";
+            } else {
+                arr+=",";
+            }
+        }
+        System.out.println(arr);
+        model.addAttribute("arrObj", arr);
+        return "playlist";
+    }
 
 	@GetMapping(path="/find") 
 	public @ResponseBody String findGenre(@RequestParam String song) {
@@ -62,12 +97,12 @@ public class MainController {
         //userRepository.resetAutoInc();
     }
 
-    
+
     @RequestMapping(path="/request")
     public String request(Model model) {
     	
     	//If there is no data in database, we will redirect to index.ftl
-        if((int)userRepository.count() == 0) {
+        if(userRepository.count() == 0) {
             return "index";
         }
 
@@ -104,5 +139,5 @@ public class MainController {
     	
     	
     }
-    
+
 }
