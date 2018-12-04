@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Convert JSON Data to HTML Table</title>
+    <#include "head.ftl" />
+    <title>Recommended Songs</title>
     <style>
         th, td, p, input {
             font:14px Verdana;
@@ -19,62 +20,25 @@
     </style>
 </head>
 <body>
-    <input type="button" onclick="CreateTableFromJSON()" value="Display Recommendations" />
-    <p id="showData"></p>
+    <#include "nav.ftl" />
+    <div class="container-fluid">
+        <p id="showData"></p>
+    </div>
 </body>
 
 <script>
-    function loadJSON(path, success, error)
-{
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function()
-    {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                if (success)
-                    success(JSON.parse(xhr.responseText));
-            } else {
-                if (error)
-                    error(xhr);
-            }
-        }
-    };
-    xhr.open("GET", path, true);
-    xhr.send();
-}
+
+    $(document).ready(function() {
+        // executes when HTML-Document is loaded and DOM is ready
+        CreateTableFromJSON();
+    });
+
     function CreateTableFromJSON() {
-	/*loadJSON('my-file.json',
-        	function(data) { console.log(data); },
-        	function(xhr) { console.error(xhr); }
-	);*/	
-	//dynamically making jSON file stub
         
-        
+    
 	    var myBooks = ${arrObj};
 
-		/*  
-		[
-            {
-                "Book ID": "1",
-                "Book Name": "Computer Architecture",
-                "Category": "Computers",
-                "Price": "125.60"
-            },
-            {
-                "Book ID": "2",
-                "Book Name": "Asp.Net 4 Blue Book",
-                "Category": "Programming",
-                "Price": "56.00"
-            },
-            {
-                "Book ID": "3",
-                "Book Name": "Popular Science",
-                "Category": "Science",
-                "Price": "210.40"
-            }
-        ];
-        */
-        
+
 	    
 
         // EXTRACT VALUE FOR HTML HEADER. 
@@ -92,6 +56,7 @@
 
         // CREATE DYNAMIC TABLE.
         var table = document.createElement("table");
+        table.classList.add("table")
 
         // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
 
