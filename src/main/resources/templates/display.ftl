@@ -36,11 +36,19 @@
     function CreateTableFromJSON() {
         
     
-	    var myBooks = ${arrObj};
+	    var myBooks = ${arrObj!"null"};
 
-
+        if (myBooks===null)
+        {
+            console.log("no songs");
+            var msg = document.createElement("h2");
+            msg.innerHTML = "Oops! Go back to home to add more songs to your playlist."
+            var divContainer = document.getElementById("showData");
+            divContainer.innerHTML = "";
+            divContainer.appendChild(msg);
+            return;
+        }
 	    
-
         // EXTRACT VALUE FOR HTML HEADER. 
         // ('Book ID', 'Book Name', 'Category' and 'Price')
         var col = [];

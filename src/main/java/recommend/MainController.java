@@ -90,10 +90,11 @@ public class MainController {
 	}
 
     @RequestMapping(path="/clear") 
-    public void clear() {
+    public String clear() {
         
         id_counter = 1;
         userRepository.deleteAll();
+        return "index";
         //userRepository.resetAutoInc();
     }
 
@@ -103,7 +104,8 @@ public class MainController {
     	
     	//If there is no data in database, we will redirect to index.ftl
         if(userRepository.count() == 0) {
-            return "index";
+            model.addAttribute("arrObj", null);
+            return "display";
         }
 
         //Retrieve a random song from our database

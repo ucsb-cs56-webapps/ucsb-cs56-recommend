@@ -25,10 +25,9 @@
 </head>
 <body>
     <#include "nav.ftl" />
-    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
     <div class="container-fluid">
         <p id="showData"></p>
-        <form class = "form" action="/demo/clear" target="hiddenFrame">
+        <form class = "form" action="/demo/clear">
             <button type="submit" class="btn btn-outline-primary" value="ClearDB">ClearDB</button>
         </form>
     </div>
