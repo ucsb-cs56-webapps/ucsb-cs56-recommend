@@ -125,8 +125,9 @@ public class MainController {
 
         //Pass random song to spotify api and retrieve an arrayList(3) of recommended songs
         String client_id = env.getProperty("spotify_client_id");
-        /*
+        
         String client_secret = env.getProperty("spotify_client_secret");
+        /*
         for (int i=0; i<20; i++) {
             logger.info("--------------");
         }
