@@ -107,7 +107,7 @@ public class RecSongs
         System.out.println("exited while loop");
         System.out.print(songList);
         System.out.println("got songs list");
-        return songList;        
+        return songList;      
     }
 
     //How we will do this: Get catgegory playlist --> Get playlist's tracks
@@ -165,11 +165,16 @@ public class RecSongs
     //Get playlist's tracks
     private Paging<PlaylistTrack> getPlaylistTracks(String playlistId)
     {
+        int rand = (int) Math.floor(Math.random() * (playlistLength-4));
+        if (rand < 0)
+        {
+            rand = 0;
+        }
         System.out.println("getting playlist tracks");
         GetPlaylistsTracksRequest getPlaylistsTracksRequest = spotifyApi
           .getPlaylistsTracks(playlistId)
           .limit(3)
-          .offset((int) Math.floor(Math.random() * (playlistLength-4)))
+          .offset(rand)
           .market(CountryCode.US)
           .build();
         try
