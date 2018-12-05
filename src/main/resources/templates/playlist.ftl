@@ -2,7 +2,7 @@
 <html>
 <head>
     <#include "head.ftl" />
-    <title>Recommended Songs</title>
+    <title>My Playlist</title>
     <style>
         th, td, p, input {
             font:14px Verdana;
@@ -17,26 +17,34 @@
         th {
             font-weight:bold;
         }
+        .form
+        {
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
     <#include "nav.ftl" />
     <div class="container-fluid">
         <p id="showData"></p>
+        <form class = "form" action="/demo/clear">
+            <button type="submit" class="btn btn-outline-primary" value="ClearDB">ClearDB</button>
+        </form>
     </div>
+    
 </body>
 
 <script>
-
-    $(document).ready(function() {
-        // executes when HTML-Document is loaded and DOM is ready
-        CreateTableFromJSON();
-    });
-
+$(document).ready(function() {
+ // executes when HTML-Document is loaded and DOM is ready
+ CreateTableFromJSON();
+});
     function CreateTableFromJSON() {
-        
-    
+
+
 	    var myBooks = ${arrObj!"null"};
+
+        console.log(myBooks);
 
         if (myBooks===null)
         {
@@ -48,7 +56,6 @@
             divContainer.appendChild(msg);
             return;
         }
-	    
 
         // EXTRACT VALUE FOR HTML HEADER. 
         // ('Book ID', 'Book Name', 'Category' and 'Price')
@@ -60,47 +67,32 @@
                 }
             }
         }
-        col.push("Add");
+
+
         // CREATE DYNAMIC TABLE.
         var table = document.createElement("table");
         table.classList.add("table")
 
         // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
         var tr = table.insertRow(-1);                   // TABLE ROW.
+
         for (var i = 0; i < col.length; i++) {
             var th = document.createElement("th");      // TABLE HEADER.
             th.innerHTML = col[i];
             tr.appendChild(th);
         }
+
         // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < myBooks.length; i++) {
+
             tr = table.insertRow(-1);
-            for (var j = 0; j < col.length-1; j++) {
+
+            for (var j = 0; j < col.length; j++) {
                 var tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = myBooks[i][col[j]];
             }
-            var btn = document.createElement('input');
-            btn.type = "button";
-            btn.value = "Add to Playlist";
-            console.log(i);
-            console.log(myBooks[i][col[0]]);
-            console.log(myBooks[i][col[1]]);
-            console.log(myBooks[i][col[2]]);
-            var songName = myBooks[i][col[0]];
-            var songArtist = myBooks[i][col[1]];
-            var songGenre = myBooks[i][col[2]];
-            btn.id = i;
 
-            btn.onclick = function()
-            {
-                var xhr = new XMLHttpRequest();
-                var path = "";
-                path = "/demo/add?song="+myBooks[this.id]["song"]+"&&artist="+myBooks[this.id]["artist"]+"&&genre="+myBooks[this.id]["genre"];
-
-                xhr.open("GET", path);
-                xhr.send();
-            }
-            tr.appendChild(btn);
         }
 
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
