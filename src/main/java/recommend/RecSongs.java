@@ -25,6 +25,9 @@ import java.util.concurrent.Future;
 
 import java.util.*; //for ArrayList
 import java.lang.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 
 /**
  * Uses spotify API to send back recommended songs to client based on user's songs from client.
@@ -35,18 +38,15 @@ public class RecSongs
 {
     
     //instance variables 
-    private final String clientId = "a1836f665e904cb4869901a56eb1582b";
-    private final String clientSecret = "cfb9be2440aa427ca22fa07d583833d7";
+   
+    //private final String clientId; // = "a1836f665e904cb4869901a56eb1582b";
+    //private final String clientSecret; // = "cfb9be2440aa427ca22fa07d583833d7";
     private final int songsToReturn = 3;
     private int playlistLength;
 
     //authentification
-    private final SpotifyApi spotifyApi = new SpotifyApi.Builder()
-          .setClientId(clientId)
-          .setClientSecret(clientSecret)
-          .build();
-    private final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
-          .build();
+    private final SpotifyApi spotifyApi; 
+    private final ClientCredentialsRequest clientCredentialsRequest; 
 
     public void clientCredentials_Sync() {
         try {
@@ -64,8 +64,14 @@ public class RecSongs
     }
     
     //Constructor - intialize clientcredentials
-    RecSongs()
+    RecSongs(String clientId, String clientSecret)
     {
+        spotifyApi = new SpotifyApi.Builder()
+          .setClientId(clientId)
+          .setClientSecret(clientSecret)
+          .build();
+          clientCredentialsRequest = spotifyApi.clientCredentials()
+          .build();
         clientCredentials_Sync();
         playlistLength = 0;
         System.out.println("client credentials authorized.");
@@ -101,9 +107,7 @@ public class RecSongs
         System.out.println("exited while loop");
         System.out.print(songList);
         System.out.println("got songs list");
-        return songList;
-        
-        
+        return songList;      
     }
 
     //How we will do this: Get catgegory playlist --> Get playlist's tracks
@@ -161,11 +165,16 @@ public class RecSongs
     //Get playlist's tracks
     private Paging<PlaylistTrack> getPlaylistTracks(String playlistId)
     {
+        int rand = (int) Math.floor(Math.random() * (playlistLength-4));
+        if (rand < 0)
+        {
+            rand = 0;
+        }
         System.out.println("getting playlist tracks");
         GetPlaylistsTracksRequest getPlaylistsTracksRequest = spotifyApi
           .getPlaylistsTracks(playlistId)
           .limit(3)
-          .offset((int) Math.floor(Math.random() * (playlistLength-4)))
+          .offset(rand)
           .market(CountryCode.US)
           .build();
         try

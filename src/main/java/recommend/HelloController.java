@@ -20,6 +20,16 @@ public class HelloController {
         return "index";
     }
 
+    @RequestMapping("/display")
+    public String display() {
+        return "display";
+    }
+
+    @RequestMapping("/playlist")
+    public String playlist() {
+        return "playlist";
+    }
+
 	//HelloController is able to return text thanks to @RestController
 	//IF it is invoked by a broswer or through curl in cmd
 	//@RestController is actually @Controller and @ResponseBody combined
