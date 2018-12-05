@@ -117,7 +117,7 @@ public class MainController {
             model.addAttribute("arrObj", null);
             return "display";
         }
-
+        
         //Retrieve a random song from our database
         int index = (int)(Math.random() * userRepository.count()) + 1;
         String songGenre = userRepository.findById(index).get().getGenre();
@@ -150,6 +150,9 @@ public class MainController {
                 arr+=",";
             }
         }
+        
+
+        //String arr = "[{\"id\":1,\"artist\":\"Michael Jackson\",\"genre\":\"Pop\",\"songName\":\"Billie Jean\"},{\"id\":2,\"artist\":\"Queen\",\"genre\":\"Rock\",\"songName\":\"Bohemian Rhapsody\"},{\"id\":3,\"artist\":\"Lorde\",\"genre\":\"pop\",\"songName\":\"somesongshesang\"}]";
 
         //Pass array of JSONObjects to display.ftl
         model.addAttribute("arrObj", arr);
