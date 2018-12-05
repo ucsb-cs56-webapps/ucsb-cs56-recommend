@@ -49,5 +49,7 @@ Instructions for setting up spotify api locally
 
 ```
 6) Create a ```heroku.json``` file in the config directory. The contents should be the same as above.
-7) You're all good to go.
+7) Execute ```source env.sh``` OR . env.sh
+8) You can check your environment variables with the following command: ```echo $SPRING_APPLICATION_JSON```
+9) You're all good to go.
 
