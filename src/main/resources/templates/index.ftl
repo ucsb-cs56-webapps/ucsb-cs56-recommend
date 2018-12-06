@@ -39,6 +39,7 @@
             </select>
           </div>
           <button type="submit" class="btn btn-outline-primary" value="ViewDB" onclick="clearFields()" data-toggle="modal" data-target="#exampleModal">Add Song</button>
+          <!-- Modal needs AJAX so it knows whether to display successful or failed add
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -53,6 +54,7 @@
               </div>
             </div>
           </div>
+        -->
         </div>
        </form>
 
@@ -63,9 +65,10 @@
     {
       setTimeout(function(){document.getElementById('song-input').reset();}, 1000); //timeout gives server time to load song into db before resetting form
     } 
-
+    /*  JS for dispaying modal. Needs AJAX to know successful or failed add
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
     })
+    */
   </script>
 </html>

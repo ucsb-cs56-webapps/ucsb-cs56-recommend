@@ -44,14 +44,19 @@ public class MainController {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 
+        if(userRepository.existsBySong(song)) {
+            return "UNSUCCESSFUL ADD";
+        }
+
 		User n = new User();
+        id_counter = (int)(userRepository.count()) + 1;         //suppose to increment instead of using specific count each time, doing this because userRepository cant be called outside of functions for some reason????
         n.setID(id_counter);
-        id_counter += 1;
-		n.setSongName(song);
+
+        n.setSongName(song);
 		n.setArtist(artist);
 		n.setGenre(genre);
 		userRepository.save(n);
-		return "Saved";
+		return "SUCCESSFUL ADD";
 	}
 
     /*
@@ -92,12 +97,6 @@ public class MainController {
         model.addAttribute("arrObj", arr);
         return "playlist";
     }
-
-	@GetMapping(path="/find") 
-	public @ResponseBody String findGenre(@RequestParam String song) {
-		
-		return userRepository.findUserBySong(song).getSongName();
-	}
 
     @RequestMapping(path="/clear") 
     public String clear() {
