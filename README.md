@@ -35,6 +35,11 @@ mysql> create user 'springuser'@'%' identified by 'ThePassword';
 mysql> grant all on db_example.* to 'springuser'@'%'; 
 ```
 
+MySQL on Heroku
+Heroku has a plug in called ClearDB MySQL that will host a MySQL database for you. 
+This is free, but you do need to fill in credit card information for some reason.
+You will find this under Overview >> installed add-ons. 
+
 Instructions for setting up spotify api locally
 1) Go to this link: https://developer.spotify.com/dashboard/
 2) Log in/create an account. Click "Create a Client ID"

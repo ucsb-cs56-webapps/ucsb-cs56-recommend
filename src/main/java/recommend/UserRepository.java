@@ -13,5 +13,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	//@Query(value = "ALTER TABLE user AUTO_INCREMENT = 1;", nativeQuery = true)
 	//void resetAutoInc();
 
-	User findUserBySong(String song);
+	boolean existsBySong(String song);
+	User findBySong(String song);
 }
